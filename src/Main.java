@@ -1,24 +1,24 @@
-import java.util.Locale;
+import java.math.BigDecimal;
 
 public class Main {
     public static void main(String[] args) {
-        double productCost = 9.99;
-        double vatRate = 0.05;
-        double vatPerUnit = productCost * vatRate;
+        BigDecimal productCost = new BigDecimal("9.99");
+        BigDecimal vatRate = new BigDecimal("0.05");
+        BigDecimal vatPerUnit = productCost.multiply(vatRate);
 
-        double totalNet = 0.0;
-        double totalVat = 0.0;
-        double totalGross = 0.0;
+        BigDecimal totalNet = BigDecimal.ZERO;
+        BigDecimal totalVat = BigDecimal.ZERO;
+        BigDecimal totalGross = BigDecimal.ZERO;
 
-        for (int i = 0; i < 10_000; i++) {
-            totalNet += productCost;
-            totalVat += vatPerUnit;
-            totalGross += productCost + vatPerUnit;
+        for (int i = 0; i < 10000; i++) {
+            totalNet = totalNet.add(productCost);
+            totalVat = totalVat.add(vatPerUnit);
+            totalGross = totalGross.add(productCost.add(vatPerUnit));
         }
 
-        System.out.printf(Locale.US, "VAT per unit: %.4f%n", vatPerUnit);
-        System.out.printf(Locale.US, "Total net sales: %.2f%n", totalNet);
-        System.out.printf(Locale.US, "Total VAT: %.4f%n", totalVat);
-        System.out.printf(Locale.US, "Total gross sales: %.4f%n", totalGross);
+        System.out.println("VAT per unit: " + vatPerUnit);
+        System.out.println("Total net sales: " + totalNet);
+        System.out.println("Total VAT: " + totalVat);
+        System.out.println("Total gross sales: " + totalGross);
     }
 }
